@@ -1,10 +1,11 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { loginDto } from './DTO/login.dto';
 import { signupDto } from './DTO/signup.dto';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class userService {
@@ -12,26 +13,31 @@ export class userService {
   constructor(
     @InjectRepository(User)
     private userRepo: Repository<User>,
+    private jwtService: JwtService
+
   ) {} 
   
   async getUsers():Promise<User[]>{
     return await this.userRepo.find();
   }
 
-  async login(logindata:loginDto):Promise<User>{
+  async login(logindata:loginDto){
     const user = await this.userRepo    
     .createQueryBuilder('user')
-    .where('user.userName = :userName or ', { userName: logindata.userName })
+    .where('user.userName = :userName or user.email = :email ', { userName: logindata.userName, email: logindata.email })
     .getOne();
 
     if(user){
-        const valid = await bcrypt.compare(logindata.password, user.password);
-        if(valid){
-            return user;
-        }
-    }
-    throw new ConflictException(`Le username ou le mot de passe est incorrect`); 
+      const valid = await bcrypt.compare(logindata.password, user.password);
+      if(valid){
+        const payload = { userName: user.userName, sub: user.id };
+        const token = this.jwtService.sign(payload);
+        return {"access token":token};
+  }
+  throw new UnauthorizedException(`Le username/email ou le mot de passe est incorrect`); 
 }
+  }
+
 
   async signup(signupdata:signupDto):Promise<Partial<User>>{
     const user = this.userRepo.create({
@@ -56,6 +62,9 @@ export class userService {
 async logout(){
     return {message : 'logout success'}
 }
-        
+
+async deleteUser(id:string){
+    return await this.userRepo.delete(id)
+}
 
 }

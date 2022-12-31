@@ -1,13 +1,14 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, Length, Matches } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString, Length, Matches, ValidateIf } from 'class-validator';
 
 export class loginDto {
 
-
+  @ValidateIf(o => !o.userName || o.email)
   @IsNotEmpty({ message: 'Email is required'})
   @IsEmail({ message: 'Invalid email'})
   @IsOptional()
   email: string;
   
+  @ValidateIf(o => !o.email || o.userName)
   @IsNotEmpty({ message: 'UserName is required'})
   @Length(3, 10, { message: 'UserName must be between 7 and 20 characters'})
   userName: string;
