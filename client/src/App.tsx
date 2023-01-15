@@ -1,9 +1,10 @@
 import Routes from '~/core/routes'
+import Navbar from '~/core/Navbar'
 
 function App() {
   return (
-    <div>
-      <h1>Hello world</h1>
+    <div className="min-h-screen">
+      <Navbar />
       <Routes />
     </div>
   )
