@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import { Route, Routes as RoutesProvider } from 'react-router-dom'
 import { Loading } from '~/core/Loading'
 import { useRoutes } from './loader.utils'
-import NotFound from './404.route'
+import NotFound from '../404.route'
 
 export default function Routes() {
   const routes = useRoutes()
