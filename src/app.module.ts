@@ -18,8 +18,9 @@ import {HelmetMiddleware} from '@nest-middlewares/helmet';
       //entities: ["dist/**/*.entity{.ts,.js}"],
       autoLoadEntities: true,
       synchronize: true,
-      //synchronize : true means that TypeORM will automatically create tables for all entities that don't exist in the database.
-    }),UserModule
+      ssl: process.env.DB_SSL === 'true' ? true : false,
+    }),
+    UserModule
   ],
 })
   

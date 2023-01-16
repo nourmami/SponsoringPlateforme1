@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -9,37 +13,44 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class userService {
-
   constructor(
     @InjectRepository(User)
     private userRepo: Repository<User>,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+  ) {}
 
-  ) {} 
-  
-  async getUsers():Promise<User[]>{
+  async getUsers(): Promise<User[]> {
     return await this.userRepo.find();
   }
 
-  async login(logindata:loginDto){
-    const user = await this.userRepo    
-    .createQueryBuilder('user')
-    .where('user.userName = :userName or user.email = :email ', { userName: logindata.userName, email: logindata.email })
-    .getOne();
+  async login(logindata: loginDto) {
+    const user = await this.userRepo
+      .createQueryBuilder('user')
+      .where('user.userName = :userName or user.email = :email ', {
+        userName: logindata.userName,
+        email: logindata.email,
+      })
+      .getOne();
 
-    if(user){
+    if (user) {
       const valid = await bcrypt.compare(logindata.password, user.password);
-      if(valid){
-        const payload = { userName: user.userName, sub: user.id };
+      if (valid) {
+        const payload = {
+          id: user.id,
+          userName: user.userName,
+          role: user.role,
+        };
         const token = this.jwtService.sign(payload);
-        return {"access token":token};
-  }
-  throw new UnauthorizedException(`the password or the username is incorrect`);
-}
-    throw new UnauthorizedException(`the user should be registered`);
+        return { token: token };
+      }
+    }
+
+    throw new UnauthorizedException(
+      `Le username/email ou le mot de passe est incorrect`,
+    );
   }
 
-  async signup(signupdata:signupDto):Promise<Partial<User>>{
+  async signup(signupdata: signupDto): Promise<Partial<User>> {
     const user = this.userRepo.create({
       ...signupdata,
     });
@@ -48,21 +59,21 @@ export class userService {
     try {
       await this.userRepo.save(user);
     } catch (e) {
-      throw new ConflictException(`Le username et le email doivent être unique`);
+      throw new ConflictException(
+        `Le username et le email doivent être unique`,
+      );
     }
     return {
       id: user.id,
       userName: user.userName,
       email: user.email,
-      role: user.role
+      role: user.role,
     };
+  }
 
-}
+  async logout() {}
 
-  async logout(){};
-
-  async deleteUser(id:string){
-      return await this.userRepo.delete(id)
-}
-
+  async deleteUser(id: string) {
+    return await this.userRepo.delete(id);
+  }
 }
