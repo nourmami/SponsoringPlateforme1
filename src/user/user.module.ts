@@ -9,7 +9,6 @@ import * as dotenv from 'dotenv';
 import { JwtStrategy } from './strategy/passport-jwt.strategy';
 dotenv.config();
 import { ConfigService } from '@nestjs/config';
-import { roleProtector } from 'src/common/decorators';
 
 @Module({
   imports: [
@@ -25,8 +24,4 @@ import { roleProtector } from 'src/common/decorators';
   providers: [userService, JwtStrategy, ConfigService],
   exports: [userService],
 })
-export class UserModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(roleProtector).forRoutes('/user/me');
-  }
-}
+export class UserModule {}

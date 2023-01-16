@@ -2,8 +2,11 @@ import {
   NestMiddleware,
   createParamDecorator,
   ExecutionContext,
+  Injectable,
+  NestInterceptor,
+  CallHandler,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { NextFunction } from 'express';
 
 export const AuthenticatedUser = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
@@ -12,7 +15,17 @@ export const AuthenticatedUser = createParamDecorator(
   },
 );
 
-export function roleProtector(req: any, res: Response, next: NextFunction) {
-  console.log(`role play`, req.user);
-  next();
+@Injectable()
+export class RoleInterceptor implements NestInterceptor {
+  constructor(private _role: string) {}
+
+  intercept(context: ExecutionContext, next: CallHandler) {
+    console.log(context.switchToHttp().getRequest().user.role);
+
+    if (context.switchToHttp().getRequest().user.role !== this._role) {
+      throw new UnauthorizedException();
+    }
+
+    return next.handle();
+  }
 }
