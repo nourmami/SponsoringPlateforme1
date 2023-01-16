@@ -1,4 +1,9 @@
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import {
+  NestMiddleware,
+  createParamDecorator,
+  ExecutionContext,
+} from '@nestjs/common';
+import { NextFunction } from 'express';
 
 export const AuthenticatedUser = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
@@ -6,3 +11,8 @@ export const AuthenticatedUser = createParamDecorator(
     return request.user;
   },
 );
+
+export function roleProtector(req: any, res: Response, next: NextFunction) {
+  console.log(`role play`, req.user);
+  next();
+}
