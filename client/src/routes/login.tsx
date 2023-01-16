@@ -39,7 +39,9 @@ export default function Login() {
             >
               OR
             </span>
-            <Button href="/register">Create an Account</Button>
+            <Button href="/register" className="min-w-[320px]">
+              Create an Account
+            </Button>
           </div>
           <div className="grid justify-items-end content-center">
             <img src="/art/headphones.svg" alt="" />

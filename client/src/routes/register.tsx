@@ -44,7 +44,9 @@ export default function Register() {
             >
               OR
             </span>
-            <Button href="/login">Login with Existing Account</Button>
+            <Button href="/login" className="min-w-[320px]">
+              Login with Existing Account
+            </Button>
           </div>
           <div className="grid justify-items-end content-center">
             <img src="/art/headphones.svg" alt="" />
