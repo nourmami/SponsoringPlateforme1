@@ -43,7 +43,7 @@ module.exports = {
           800: '#00638d',
           900: '#065274',
         },
-        background: '#EEEEEE',
+        background: 'white', // #ccc
       },
     },
   },

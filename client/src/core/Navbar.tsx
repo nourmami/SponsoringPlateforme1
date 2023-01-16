@@ -1,5 +1,5 @@
 import { Button, Container, Drawer } from '~/ui'
-import HamburgerMenu from './icons/HamburgerMenu'
+import { CgMenuRight as HamburgerMenu } from '~/core/icons'
 import Logo from './Logo'
 
 export default function Navbar() {
@@ -16,12 +16,14 @@ export default function Navbar() {
           <Button thin href="/login">
             login
           </Button>
-          <Button variant="primary">register</Button>
+          <Button variant="primary" href="/register">
+            register
+          </Button>
         </div>
         <div className="block lg:hidden">
           <Drawer>
             <Drawer.Trigger className="!text-black pr-0">
-              <HamburgerMenu className="w-8" />
+              <HamburgerMenu className="text-3xl" />
             </Drawer.Trigger>
           </Drawer>
         </div>

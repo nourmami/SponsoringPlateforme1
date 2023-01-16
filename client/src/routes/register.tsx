@@ -4,17 +4,22 @@ import {
   MdOutlineMailOutline as EmailIcon,
 } from '~/core/icons'
 
-export default function Login() {
+export default function Register() {
   return (
     <div>
       <div className="h-[80vh]">
         <Container className="grid grid-cols-3 h-full">
           <div className="grid justify-items-start content-center max-w-xl">
             <div className="flex flex-col space-y-3">
-              <h1 className="font-semibold text-xl">Login</h1>
+              <h1 className="font-semibold text-xl">Register</h1>
               <Input
                 type="text"
-                label="Email / Username"
+                label="Fullname"
+                suffix={<EmailIcon className="text-primary-600" />}
+              />
+              <Input
+                type="text"
+                label="Email"
                 suffix={<EmailIcon className="text-primary-600" />}
               />
               <Input
@@ -23,7 +28,7 @@ export default function Login() {
                 suffix={<LockIcon className="text-primary-600" />}
               />
               <div>
-                <Button variant="primary">Login</Button>
+                <Button variant="primary">Register</Button>
               </div>
             </div>
           </div>
@@ -39,7 +44,7 @@ export default function Login() {
             >
               OR
             </span>
-            <Button href="/register">Create an Account</Button>
+            <Button href="/login">Login with Existing Account</Button>
           </div>
           <div className="grid justify-items-end content-center">
             <img src="/art/headphones.svg" alt="" />

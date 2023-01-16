@@ -41,8 +41,9 @@ const buttonStyles = cva('px-6 py-2 rounded-md capitalize duration-300', {
   },
 })
 
+
 interface Props
   extends VariantProps<typeof buttonStyles>,
-    React.HTMLAttributes<HTMLButtonElement> {
+    React.ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string
 }
