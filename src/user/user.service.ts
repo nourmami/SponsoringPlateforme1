@@ -1,6 +1,7 @@
 import {
   ConflictException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -22,6 +23,14 @@ export class userService {
   async getUsers(): Promise<User[]> {
     return await this.userRepo.find();
   }
+
+  async getUserById(id: number): Promise<User> {
+    const user = await this.userRepo.findOne({where : { id : id}});
+        if (!user) {
+            throw new NotFoundException(`user #${id} not found`);
+        }
+        return user;
+    }
 
   async login(logindata: loginDto) {
     const user = await this.userRepo
@@ -72,6 +81,17 @@ export class userService {
   }
 
   async logout() {}
+
+
+  async updateUser(id:number,newUser:signupDto): Promise<User>{
+    const newEntity = await this.userRepo.preload({id, ...newUser});
+    if (!newEntity) {
+        throw new NotFoundException(`User #${id} not found`);
+    }
+    return await this.userRepo.save(newEntity);
+
+  }
+  
 
   async deleteUser(id: string) {
     return await this.userRepo.delete(id);

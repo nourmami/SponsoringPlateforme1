@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { loginDto } from './DTO/login.dto';
 import { signupDto } from './DTO/signup.dto';
 import { userService } from './user.service';
@@ -15,9 +15,16 @@ export class UserController {
     return user;
   }
 
-  @Get()
+  @Get('all')
+  @UseGuards(JwtAuthGuard)
   getUsers() {
     return this.userService.getUsers();
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  async getUserById(@Param('id') id: number) {
+    return await this.userService.getUserById(id);
   }
 
   @Post('login')
@@ -36,8 +43,18 @@ export class UserController {
     return this.userService.logout();
   }
 
+  @Put('update/:id')
+  @UseGuards(JwtAuthGuard)
+  async updateUser(@Param('id') id: number, @Body() data: signupDto) {
+    return await this.userService.updateUser(id, data);
+  }
+  
   @Delete('/delete/:id')
+  @UseGuards(JwtAuthGuard)
   async deleteUser(@Param('id') id: string) {
     return await this.userService.deleteUser(id);
   }
+
+  
+
 }
