@@ -17,7 +17,8 @@ dotenv.config();
       //entities: ["dist/**/*.entity{.ts,.js}"],
       autoLoadEntities: true,
       synchronize: true,
-    }),UserModule
+    }),
+    UserModule
   ],
 })
   
