@@ -38,7 +38,6 @@ export class userService {
 }
   }
 
-
   async signup(signupdata:signupDto):Promise<Partial<User>>{
     const user = this.userRepo.create({
       ...signupdata,
@@ -59,12 +58,10 @@ export class userService {
 
 }
 
-async logout(){
-    return {message : 'logout success'}
-}
+  async logout(){};
 
-async deleteUser(id:string){
-    return await this.userRepo.delete(id)
+  async deleteUser(id:string){
+      return await this.userRepo.delete(id)
 }
 
 }

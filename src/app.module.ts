@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import * as dotenv from 'dotenv';
 dotenv.config();
+import {HelmetMiddleware} from '@nest-middlewares/helmet';
 
 
 @Module({
@@ -23,4 +24,10 @@ dotenv.config();
 })
   
 
-export class AppModule {}
+export class AppModule implements NestModule{
+  configure(consumer:MiddlewareConsumer):any {
+    consumer
+      .apply(HelmetMiddleware)
+      .forRoutes('');
+  }
+}
