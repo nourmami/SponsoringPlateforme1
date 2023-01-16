@@ -13,7 +13,9 @@ export default function Navbar() {
           <Button thin>Insights</Button>
         </div>
         <div className="hidden lg:block">
-          <Button thin>login</Button>
+          <Button thin href="/login">
+            login
+          </Button>
           <Button variant="primary">register</Button>
         </div>
         <div className="block lg:hidden">
