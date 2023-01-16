@@ -4,6 +4,7 @@ import { UserModule } from './user/user.module';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import {HelmetMiddleware} from '@nest-middlewares/helmet';
+import { PostModule } from './post/post.module';
 
 
 @Module({
@@ -20,7 +21,8 @@ import {HelmetMiddleware} from '@nest-middlewares/helmet';
       synchronize: true,
       ssl: process.env.DB_SSL === 'true' ? true : false,
     }),
-    UserModule
+    UserModule,
+    PostModule
   ],
 })
   

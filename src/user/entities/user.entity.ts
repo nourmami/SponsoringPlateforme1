@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany } from 'typeorm';
 import { CommonEntity } from '../../common/common.entity';
 import { Exclude } from 'class-transformer';
 import { UserRoleEnum } from '../../enums/user-role.enum';
+import { Post } from '../../post/entities/post.entity';
 
 @Entity()
 export class User extends CommonEntity {
@@ -34,4 +35,8 @@ export class User extends CommonEntity {
 
   @ManyToMany(() => User, (user) => user.following)
   followers: User[];
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
+
 }

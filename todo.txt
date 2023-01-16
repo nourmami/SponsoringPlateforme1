@@ -33,14 +33,15 @@ Post {
 	/login                    +
 	/signup                   +
 	/me                       +
-	/ -> PUT: update user
-	/profiles/:id GET
-	/ -> Get
+    /:id GET user by id       + 
+	/all -> Get all users     +
+	/update/:id -> PUT: update user     +
+	
 	
 /posts
-	/  -> POST, create
-	/  -> GET, get my gallery posts
-	/user/:id -> GET: GET posts of a user by id
+	/  -> POST, create        +    
+	/  -> GET, get my gallery posts   +
+	/user/:id -> GET: GET posts of a user by id   
 	
 /follow
 	/:user -> PUT -> I follow him/her/it/they/xey/etcey
