@@ -34,8 +34,9 @@ export class userService {
         const token = this.jwtService.sign(payload);
         return {"access token":token};
   }
-  throw new UnauthorizedException(`Le username/email ou le mot de passe est incorrect`); 
+  throw new UnauthorizedException(`the password or the username is incorrect`);
 }
+    throw new UnauthorizedException(`the user should be registered`);
   }
 
   async signup(signupdata:signupDto):Promise<Partial<User>>{
