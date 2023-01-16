@@ -1,18 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import {CommonEntity} from '../../common/common.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { CommonEntity } from '../../common/common.entity';
 import { Exclude } from 'class-transformer';
 import { UserRoleEnum } from '../../enums/user-role.enum';
 
-
 @Entity()
-export class User extends CommonEntity{
-    
+export class User extends CommonEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   userName: string;
-  
+
   @Column({ unique: true })
   email: string;
 
@@ -27,11 +25,13 @@ export class User extends CommonEntity{
   @Column({
     type: 'enum',
     enum: UserRoleEnum,
-    default: UserRoleEnum.USER
+    default: UserRoleEnum.USER,
   })
   role: string;
-  
 
-  
+  @ManyToMany(() => User, (user) => user.followers)
+  following: User[];
+
+  @ManyToMany(() => User, (user) => user.following)
+  followers: User[];
 }
-

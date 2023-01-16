@@ -18,6 +18,7 @@ import {HelmetMiddleware} from '@nest-middlewares/helmet';
       //entities: ["dist/**/*.entity{.ts,.js}"],
       autoLoadEntities: true,
       synchronize: true,
+      ssl: process.env.DB_SSL === 'true' ? true : false,
     }),
     UserModule
   ],

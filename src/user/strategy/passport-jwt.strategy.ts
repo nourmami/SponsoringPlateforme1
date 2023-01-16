@@ -9,11 +9,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-
   constructor(
     private configService: ConfigService,
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -22,9 +21,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  //function to validate the token every time a request is made
+  // function to validate the token every time a request is made
   async validate(payload: PayloadInterface) {
-    const user = await this.userRepository.findOne({ where: {userName: payload.userName }});
+    const user = await this.userRepository.findOne({
+      where: { userName: payload.userName },
+    });
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -32,8 +33,5 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     delete user.salt;
     delete user.password;
     return user;
-    };
-
-
-
   }
+}

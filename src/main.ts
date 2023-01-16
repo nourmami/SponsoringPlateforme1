@@ -10,6 +10,7 @@ async function bootstrap() {
   const options = {
     origin: 'http://[::1]:3000',
   };
+
   app.enableCors(options);
 
   app.useGlobalPipes(new ValidationPipe({
@@ -18,6 +19,7 @@ async function bootstrap() {
     forbidNonWhitelisted : true
   })); 
 
-  await app.listen(3000);
+  await app.listen(4000);
 }
+
 bootstrap();
