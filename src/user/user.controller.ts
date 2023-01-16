@@ -9,8 +9,7 @@ export class UserController {
   constructor(private readonly userService: userService) {}
 
   @Get()
-  @UseGuards(JwtAuthGuard)
-
+  //@UseGuards(JwtAuthGuard)
   getUsers(){
     return this.userService.getUsers()
   }
@@ -26,6 +25,7 @@ export class UserController {
   }
 
   @Get('logout')
+  @UseGuards(JwtAuthGuard)
   logout(){
     return this.userService.logout()
   }
