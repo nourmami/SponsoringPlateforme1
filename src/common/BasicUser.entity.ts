@@ -14,6 +14,7 @@ import {
   JoinTable,
 } from 'typeorm';
 
+@Entity()
 export class BasicUser {
   @CreateDateColumn({ update: false })
   createdAt: Date;
@@ -48,18 +49,6 @@ export class BasicUser {
   })
   role: string;
 
-  @ManyToMany(() => BasicUser, (user) => user.followers)
-  @JoinTable()
-  following: BasicUser[];
-
-  @ManyToMany(() =>BasicUser, (user) => user.following)
-  @JoinTable()
-  followers: BasicUser[];
-
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
-
-
-    
-
 }
