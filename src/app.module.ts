@@ -5,10 +5,11 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import {HelmetMiddleware} from '@nest-middlewares/helmet';
 import { PostModule } from './post/post.module';
-
+import { MulterModule } from '@nestjs/platform-express';
+import { FollowModule } from './follow/follow.module';
 
 @Module({
-  imports: [
+  imports: [MulterModule.register(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -22,7 +23,8 @@ import { PostModule } from './post/post.module';
       ssl: process.env.DB_SSL === 'true' ? true : false,
     }),
     UserModule,
-    PostModule
+    PostModule,
+    FollowModule
   ],
 })
   

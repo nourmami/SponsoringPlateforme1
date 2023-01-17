@@ -41,13 +41,13 @@ Post {
 /posts
 	/  -> POST, create        +    
 	/  -> GET, get my gallery posts   +
-	/user/:id -> GET: GET posts of a user by id   
+	/user/:id -> GET: GET posts of a user by id   +
 	
 /follow
 	/:user -> PUT -> I follow him/her/it/they/xey/etcey
 	/:user -> DELETE -> UNFOLLOW
-	/followers -> GET -> Get users
-	/following -> GET -> Get users
+	/myfollowers -> GET -> Get users +
+	/myfollowings -> GET -> Get users +
 
 /sponsor
 	/:user -> PUT -> sponsor user 
