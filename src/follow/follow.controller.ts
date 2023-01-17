@@ -8,12 +8,14 @@ import { User } from './../user/entities/user.entity';
 
 
 @Controller('follow')
+@UseGuards(JwtAuthGuard)
 export class FollowController {
   constructor(private readonly followService: FollowService) {}
 
 @Post()
-create(@Body() createFollowDto: CreateFollowDto) {
-return this.followService.create(createFollowDto);
+@UseGuards(JwtAuthGuard)
+create(@Param('id') id : number , @AuthenticatedUser() user: User) {
+return this.followService.follow(id,user);
 }
  
 @Get('myfollowers')
@@ -31,18 +33,13 @@ getfollowings(@AuthenticatedUser() user: User) {
   }
 
 
-  @Delete(':id')
-  @UseGuards(JwtAuthGuard)
-  unfollow(@AuthenticatedUser() user: User) {
-    return this.followService.unfollow(user);
+@Delete(':id')
+@UseGuards(JwtAuthGuard)
+async unfollow(@Param('id') id : number , @AuthenticatedUser() user: User) {
+    return this.followService.unfollow(id,user);
   }
 
-  @Get('user')
-  @UseGuards(JwtAuthGuard)
-  function_name(@AuthenticatedUser() user: User) {
-    return functionnameService(user);
-
-  }
+  
 }
 
 

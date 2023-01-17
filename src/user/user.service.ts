@@ -1,9 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import {ConflictException,Injectable,NotFoundException,UnauthorizedException,} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -32,6 +27,27 @@ export class userService {
         return user;
     }
 
+    async signup(signupdata: signupDto): Promise<Partial<User>> {
+      const user = this.userRepo.create({
+        ...signupdata,
+      });
+      user.salt = await bcrypt.genSalt();
+      user.password = await bcrypt.hash(user.password, user.salt);
+      try {
+        await this.userRepo.save(user);
+      } catch (e) {
+        throw new ConflictException(
+          `Le username et le email doivent être unique`,
+        );
+      }
+      return {
+        id: user.id,
+        userName: user.userName,
+        email: user.email,
+        role: user.role,
+      };
+    }
+    
   async login(logindata: loginDto) {
     const user = await this.userRepo
       .createQueryBuilder('user')
@@ -59,26 +75,7 @@ export class userService {
     );
   }
 
-  async signup(signupdata: signupDto): Promise<Partial<User>> {
-    const user = this.userRepo.create({
-      ...signupdata,
-    });
-    user.salt = await bcrypt.genSalt();
-    user.password = await bcrypt.hash(user.password, user.salt);
-    try {
-      await this.userRepo.save(user);
-    } catch (e) {
-      throw new ConflictException(
-        `Le username et le email doivent être unique`,
-      );
-    }
-    return {
-      id: user.id,
-      userName: user.userName,
-      email: user.email,
-      role: user.role,
-    };
-  }
+  
 
   async logout() {}
 
