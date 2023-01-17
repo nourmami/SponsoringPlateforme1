@@ -31,7 +31,8 @@ getfollowings(@AuthenticatedUser() user: User) {
 
 
   @Delete(':id')
-  unfollow(@Param('id') id: number) {
-    return this.followService.unfollow(+id);
+  @UseGuards(JwtAuthGuard)
+  unfollow(@AuthenticatedUser() user: User) {
+    return this.followService.unfollow(user);
   }
 }

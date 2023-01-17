@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFollowDto } from './dto/create-follow.dto';
+import { User } from './../user/entities/user.entity';
 
 
 @Injectable()
@@ -8,7 +9,8 @@ export class FollowService {
     return 'This action adds a new follow';
   }
 
-  async unfollow(id: number) {
-    return await this.followRepo.delete(id);
+  async unfollow(user : User) {
+    
+    return;
   }
 }

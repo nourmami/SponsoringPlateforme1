@@ -5,13 +5,10 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import {HelmetMiddleware} from '@nest-middlewares/helmet';
 import { PostModule } from './post/post.module';
-<<<<<<< HEAD
 import { MulterModule } from '@nestjs/platform-express';
 import { FollowModule } from './follow/follow.module';
-=======
 import { User } from './user/entities/user.entity';
 import { Post } from './post/entities/post.entity';
->>>>>>> 340a99d2f81031c3ce81d69dacf1371abae020bb
 
 @Module({
   imports: [MulterModule.register(),
@@ -29,10 +26,7 @@ import { Post } from './post/entities/post.entity';
     }),
     UserModule,
     PostModule,
-<<<<<<< HEAD
     FollowModule
-=======
->>>>>>> 340a99d2f81031c3ce81d69dacf1371abae020bb
   ],
 })
 export class AppModule implements NestModule {
