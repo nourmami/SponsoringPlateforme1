@@ -1,18 +1,7 @@
 import { Exclude } from 'class-transformer';
 import { UserRoleEnum } from 'src/enums/user-role.enum';
 import { Post } from 'src/post/entities/post.entity';
-import {
-
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-  CreateDateColumn,
-  ManyToMany,
-  OneToMany,
-  JoinTable,
-} from 'typeorm';
+import {Entity,Column,PrimaryGeneratedColumn,UpdateDateColumn,DeleteDateColumn,CreateDateColumn,ManyToMany,OneToMany,JoinTable,} from 'typeorm';
 
 export class BasicUser {
   @CreateDateColumn({ update: false })
