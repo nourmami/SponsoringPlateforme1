@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import {Body,Controller,Delete,Get,Param,Post,Put,UseGuards,UseInterceptors,} from '@nestjs/common';
 import { loginDto } from './DTO/login.dto';
 import { signupDto } from './DTO/signup.dto';
 import { userService } from './user.service';
@@ -44,8 +34,8 @@ export class UserController {
     return await this.userService.login(data);
   }
 
-  @Post('signup')
-  async signup(@Body() data: signupDto): Promise<Partial<User>> {
+  @Post('signup/:role')
+  async signup(  @Body() data: signupDto): Promise<Partial<User>> {
     return await this.userService.signup(data);
   }
 

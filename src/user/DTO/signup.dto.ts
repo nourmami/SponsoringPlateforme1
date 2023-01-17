@@ -5,7 +5,9 @@ import {
   IsString,
   Matches,
   Validate,
+  IsEnum,
 } from 'class-validator';
+import { UserRoleEnum } from 'src/enums/user-role.enum';
 import { CustomMatchPasswords } from '../../common/passwordMatch.validator';
 
 export class signupDto {
@@ -29,4 +31,8 @@ export class signupDto {
   @Length(4, 20)
   @Validate(CustomMatchPasswords, ['password'])
   confirmPassword: string;
+
+  
+  @IsEnum(UserRoleEnum, { message: 'Invalid role' })
+  role :UserRoleEnum ;
 }

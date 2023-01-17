@@ -1,41 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany } from 'typeorm';
-import { CommonEntity } from 'src/common/common.entity';
-import { Exclude } from 'class-transformer';
-import { UserRoleEnum } from 'src/enums/user-role.enum';
-import { Post } from 'src/post/entities/post.entity';
+import { Entity,  JoinTable,  ManyToMany   } from 'typeorm';
+import { BasicUser } from 'src/common/BasicUser.entity';
+import { Sponsor }  from 'src/sponsor/entities/sponsor.entity';
+
+
 
 @Entity()
-export class User extends CommonEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: number;
+export class User extends BasicUser {
+  
+  @ManyToMany(() => Sponsor, (sponsor) => sponsor.sponsorings)
+  @JoinTable()
+  sponsors: Sponsor[];
 
-  @Column({ unique: true })
-  userName: string;
-
-  @Column({ unique: true })
-  email: string;
-
-  @Column()
-  @Exclude()
-  password: string;
-
-  @Column()
-  @Exclude()
-  salt: string;
-
-  @Column({
-    type: 'enum',
-    enum: UserRoleEnum,
-    default: UserRoleEnum.USER,
-  })
-  role: string;
-
-  @ManyToMany(() => User, (user) => user.followers)
-  following: User[];
-
-  @ManyToMany(() => User, (user) => user.following)
-  followers: User[];
-
-  @OneToMany(() => Post, (post) => post.user)
-  posts: Post[];
+  
 }

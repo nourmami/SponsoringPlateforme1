@@ -9,6 +9,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { FollowModule } from './follow/follow.module';
 import { User } from './user/entities/user.entity';
 import { Post } from './post/entities/post.entity';
+import { SponsorModule } from './sponsor/sponsor.module';
 
 @Module({
   imports: [MulterModule.register(),
@@ -26,7 +27,8 @@ import { Post } from './post/entities/post.entity';
     }),
     UserModule,
     PostModule,
-    FollowModule
+    FollowModule,
+    SponsorModule
   ],
 })
 export class AppModule implements NestModule {

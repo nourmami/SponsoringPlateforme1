@@ -45,7 +45,7 @@ Post {
 	
 
 /follow
-	/:user -> PUT -> I follow him/her/it/they/xey/etcey
+	/:user -> PUT -> I follow him/her/it/they/xey/etcey   
 	/:user -> DELETE -> UNFOLLOW
 	/myfollowers -> GET -> Get users +
 	/myfollowings -> GET -> Get users +
