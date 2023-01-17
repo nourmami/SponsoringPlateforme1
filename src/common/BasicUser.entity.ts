@@ -3,6 +3,7 @@ import { UserRoleEnum } from 'src/enums/user-role.enum';
 import { Post } from 'src/post/entities/post.entity';
 import {Entity,Column,PrimaryGeneratedColumn,UpdateDateColumn,DeleteDateColumn,CreateDateColumn,ManyToMany,OneToMany,JoinTable,} from 'typeorm';
 
+@Entity()
 export class BasicUser {
   @CreateDateColumn({ update: false })
   createdAt: Date;
@@ -37,18 +38,6 @@ export class BasicUser {
   })
   role: string;
 
-  @ManyToMany(() => BasicUser, (user) => user.followers)
-  @JoinTable()
-  following: BasicUser[];
-
-  @ManyToMany(() =>BasicUser, (user) => user.following)
-  @JoinTable()
-  followers: BasicUser[];
-
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
-
-
-    
-
 }

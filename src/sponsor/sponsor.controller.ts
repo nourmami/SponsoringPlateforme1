@@ -27,7 +27,6 @@ getSponsors(@AuthenticatedUser() user: User) {
 @UseGuards(JwtAuthGuard)
 getfollowings(@AuthenticatedUser() user: User) {
     return user.following;
-  
   }
 
   @Patch(':id')
