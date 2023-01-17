@@ -10,9 +10,11 @@ import { FollowModule } from './follow/follow.module';
 import { User } from './user/entities/user.entity';
 import { Post } from './post/entities/post.entity';
 import { SponsorModule } from './sponsor/sponsor.module';
+import { Sponsor } from './sponsor/entities/sponsor.entity';
 
 @Module({
-  imports: [MulterModule.register(),
+  imports: [
+    MulterModule.register(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -20,7 +22,7 @@ import { SponsorModule } from './sponsor/sponsor.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, Post],
+      entities: [User, Post, Sponsor],
       // autoLoadEntities: true,
       synchronize: true,
       ssl: process.env.DB_SSL === 'true' ? true : false,
@@ -28,7 +30,7 @@ import { SponsorModule } from './sponsor/sponsor.module';
     UserModule,
     PostModule,
     FollowModule,
-    SponsorModule
+    SponsorModule,
   ],
 })
 export class AppModule implements NestModule {
