@@ -13,34 +13,34 @@ export class FollowService {
     private userRepo: Repository<User>,
     
   ) {}
-
-  async unfollow(id:number,user : User) {
-    const currentUser = await this.userRepo.findOne({where : { id : user.id}});
-    if (currentUser.following.includes(id)){
-      const oldFollowing = currentUser.following.indexOf(id);
-      currentUser.following.splice(oldFollowing,1);
-      const followersold= currentUser.followers.indexOf(this.functionnameService.arguments.id);
-      currentUser.followers.splice(followersold,1)
-      await this.userRepo.save(currentUser);
-      console.log('vous n etes plus abonnée à ',user.userName);
-    }
-    else {
-      console.log('vous n etes pas abonnée à ',user.userName);
-    }
-  }
   
   async follow(id:number,user : User) {
     const currentUser = await this.userRepo.findOne({where : { id : user.id}});
-    if (currentUser.following.includes(id)){
+    const userToFollow = currentUser.following.find(following => following.id === id);
+    if (userToFollow){
       console.log('vous etes deja abonnée à ',user.userName);
     }
     else {
-      currentUser.following.push(id);
-      const userToFollow = await this.userRepo.findOne({where : { id : id}});
-      userToFollow.followers.push(user.id);
+      currentUser.following.push(userToFollow);
+      userToFollow.followers.push(currentUser);
       await this.userRepo.save(currentUser);
       await this.userRepo.save(userToFollow);
       console.log('vous etes abonnée à ',user.userName);
+    }
+  }
+
+  async unfollow(id:number,user : User) {
+    const currentUser = await this.userRepo.findOne({where : { id : user.id}});
+    const userToUnfollow = currentUser.following.find(following => following.id === id);
+    if (userToUnfollow){
+      currentUser.following = currentUser.following.filter(following => following.id !== id);
+      userToUnfollow.followers = userToUnfollow.followers.filter(followers => followers.id !== user.id);
+      await this.userRepo.save(currentUser);
+      await this.userRepo.save(userToUnfollow);
+      console.log('youre no longer following ',user.userName);
+    }
+    else {
+      console.log('youre not following ',user.userName);
     }
   }
   

@@ -1,19 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { User } from './../user/entities/user.entity';
 import { JwtAuthGuard } from './../user/guards/jwt-auth.guard';
 import { AuthenticatedUser } from 'src/common/decorators';
-
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import {editFileName} from 'src/common/filename';
 
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Post()
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postService.create(createPostDto);
+  @UseInterceptors(FileInterceptor('file', {
+    storage: diskStorage({
+    destination: './uploads',
+    filename: editFileName,
+    }),
+    }))  createPost(@Body() createPostDto: CreatePostDto,@UploadedFile() file: Express.Multer.File) {
+    return {'post':this.postService.create(createPostDto), 'file':file};
   }
 
   @Get()
