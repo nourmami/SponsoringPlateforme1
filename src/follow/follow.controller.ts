@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete,UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param,Put, Delete,UseGuards } from '@nestjs/common';
 import { FollowService } from './follow.service';
 import { CreateFollowDto } from './dto/create-follow.dto';
 import { JwtAuthGuard } from './../user/guards/jwt-auth.guard';
 import { AuthenticatedUser } from 'src/common/decorators';
 import { User } from './../user/entities/user.entity';
+
 
 
 @Controller('follow')
@@ -35,4 +36,13 @@ getfollowings(@AuthenticatedUser() user: User) {
   unfollow(@AuthenticatedUser() user: User) {
     return this.followService.unfollow(user);
   }
+
+  @Get('user')
+  @UseGuards(JwtAuthGuard)
+  function_name(@AuthenticatedUser() user: User) {
+    return functionnameService(user);
+
+  }
 }
+
+
