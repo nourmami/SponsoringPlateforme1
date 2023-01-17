@@ -1,11 +1,9 @@
 import { User } from 'src/user/entities/user.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, ManyToOne } from 'typeorm';
-import { CommonEntity } from '../../common/common.entity';
+import { CommonEntity } from 'src/common/common.entity';
 
-Entity()
+@Entity()
 export class Post extends CommonEntity {
-
-
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
@@ -18,8 +16,6 @@ export class Post extends CommonEntity {
   @Column()
   photo: string;
 
-  
-  @Column()
   @ManyToOne(() => User, (user) => user.posts)
   user: User;
 }

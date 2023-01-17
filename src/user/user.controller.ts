@@ -15,6 +15,7 @@ import { userService } from './user.service';
 import { User } from './entities/user.entity';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { AuthenticatedUser, RoleInterceptor } from 'src/common/decorators';
+
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: userService) {}
