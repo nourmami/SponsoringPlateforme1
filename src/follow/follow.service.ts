@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFollowDto } from './dto/create-follow.dto';
 import { User } from './../user/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -8,17 +7,13 @@ import { AuthenticatedUser } from 'src/common/decorators';
 
 @Injectable()
 export class FollowService {
+
   constructor(
     @InjectRepository(User)
     private userRepo: Repository<User>,
     
   ) {}
 
-  create(createFollowDto: CreateFollowDto) {
-    return 'This action adds a new follow';
-  }
-  functionnameService(user){}
- 
   async unfollow(id:number,user : User) {
     const currentUser = await this.userRepo.findOne({where : { id : user.id}});
     if (currentUser.following.includes(id)){
