@@ -15,6 +15,5 @@ export class Sponsor extends BasicUser {
   followers: User[];
 
   @ManyToMany(() => User, (user) => user.sponsors)
-  @JoinTable()
   sponsorings: User[];
 }
