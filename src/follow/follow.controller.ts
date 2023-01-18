@@ -11,34 +11,35 @@ import { User } from './../user/entities/user.entity';
 export class FollowController {
   constructor(private readonly followService: FollowService) {}
 
-@Post()
-@UseGuards(JwtAuthGuard)
-create(@Param('id') id : number , @AuthenticatedUser() user: User) {
-return this.followService.follow(id,user);
-}
- 
-@Get('myfollowers')
-@UseGuards(JwtAuthGuard)
-getFollowers(@AuthenticatedUser() user: User) {
-    return user.followers;
-
+  @Post(':id')
+  @UseGuards(JwtAuthGuard)
+  create(@Param('id') id: string, @AuthenticatedUser() user: User) {
+    return this.followService.follow(id, user);
   }
 
-@Get('myfollowings')
-@UseGuards(JwtAuthGuard)
-getfollowings(@AuthenticatedUser() user: User) {
+  @Get('myfollowers')
+  @UseGuards(JwtAuthGuard)
+  getFollowers(@AuthenticatedUser() user: User) {
+    return this.followService.getFollowers(user);
+  }
+
+  @Get('doesfollow/:id')
+  @UseGuards(JwtAuthGuard)
+  doesFollow(@Param('id') id: string, @AuthenticatedUser() user: User) {
+    return this.followService.doesFollow(id, user);
+  }
+
+  @Get('myfollowings')
+  @UseGuards(JwtAuthGuard)
+  getfollowings(@AuthenticatedUser() user: User) {
     return user.following;
-  
   }
 
-
-@Delete(':id')
-@UseGuards(JwtAuthGuard)
-async unfollow(@Param('id') id : number , @AuthenticatedUser() user: User) {
-    return this.followService.unfollow(id,user);
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  async unfollow(@Param('id') id: string, @AuthenticatedUser() user: User) {
+    return this.followService.unfollow(id, user);
   }
-
-  
 }
 
 

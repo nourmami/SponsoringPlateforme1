@@ -26,7 +26,7 @@ export class BasicUser {
   deletedAt: Date;
 
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({ unique: true })
   userName: string;
@@ -48,6 +48,21 @@ export class BasicUser {
     default: UserRoleEnum.USER,
   })
   role: string;
+
+  @Column({ nullable: true })
+  fullname: string;
+
+  @Column({ nullable: true })
+  bio: string;
+
+  @Column({ nullable: true })
+  title: string;
+
+  @Column({ nullable: true })
+  profilePicture: string;
+
+  @Column({ nullable: true })
+  coverPicture: string;
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
