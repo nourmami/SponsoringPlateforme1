@@ -55,3 +55,14 @@ Post {
 	/:user -> PUT -> sponsor user 
 	/sponsors -> GET
 	/sponsoring -> GET`
+
+
+
+
+	DB_HOST=localhost
+DB_TYPE=postgres
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=sponso
+DB_DATABASE=userdb
+SECRET=nounouSecretKey
