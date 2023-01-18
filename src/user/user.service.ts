@@ -123,6 +123,7 @@ export class userService {
   async logout() {}
 
   async updateUser(role: string, id: string, newUser: any) {
+
     if (role === UserRoleEnum.USER) {
       const newEntity = await this.userRepo.preload({ id, ...newUser });
       if (!newEntity) {

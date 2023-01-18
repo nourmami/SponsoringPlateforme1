@@ -30,8 +30,8 @@ export class SponsorService {
 
     if (user) {
       user.sponsors.push(sponsor);
-      // sponsor.sponsorings.push(user);
-      // await this.sponsorRepo.save(user);
+      sponsor.sponsorings.push(user);
+      await this.sponsorRepo.save(user);
       await this.sponsorRepo.save(sponsor);
       return user;
     }
@@ -54,8 +54,6 @@ export class SponsorService {
       console.log(sponsor.sponsorings);
       console.log(user.sponsors);
 
-      console.log(user.sponsors[0].id, sponsorId);
-
       const isSponsor = user.sponsors.find(
         (sponsor) => sponsor.id === sponsorId,
       );
@@ -69,6 +67,8 @@ export class SponsorService {
   }
 
   async getSponsors(userId: string) {
+
+    
     const user = await this.userRepo.findOne({
       where: { id: userId },
       relations: ['sponsors'],
@@ -89,6 +89,32 @@ export class SponsorService {
 
     if (user) {
       return user.sponsors.length;
+    }
+
+    return null;
+  }
+
+  async getSponsorings(userId: string) {
+    const user = await this.sponsorRepo.findOne({
+      where: { id: userId },
+      relations: ['sponsorings'],
+    });
+
+    if (user) {
+      return user.sponsorings;
+    }
+
+    return null;
+  }
+
+  async countSponsorings(userId: string) {
+    const user = await this.sponsorRepo.findOne({
+      where: { id: userId },
+      relations: ['sponsorings'],
+    });
+
+    if (user) {
+      return user.sponsorings.length;
     }
 
     return null;

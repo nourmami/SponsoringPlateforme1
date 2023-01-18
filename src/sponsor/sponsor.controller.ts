@@ -36,6 +36,17 @@ export class SponsorController {
     return this.sponsorService.getSponsors(id);
   }
 
+  @Get('sponsoring/star/:id')
+  getSponsorings(@Param('id') id: string) {
+    return this.sponsorService.getSponsorings(id);
+  }
+
+  @Get('sponsoring/me')
+  @UseGuards(JwtAuthGuard)
+  getMySponsorings(@AuthenticatedUser() user: User) {
+    return this.sponsorService.getSponsorings(user.id);
+  }
+
   @Get('')
   @UseGuards(JwtAuthGuard)
   getMySponsors(@AuthenticatedUser() user: User) {
@@ -52,6 +63,12 @@ export class SponsorController {
   @UseGuards(JwtAuthGuard)
   countSponsors(@Param('id') id: string) {
     return this.sponsorService.countSponsors(id);
+  }
+
+  @Get('sponsoring/count/:id')
+  @UseGuards(JwtAuthGuard)
+  countSponsorings(@Param('id') id: string) {
+    return this.sponsorService.countSponsorings(id);
   }
 
   // @Get('mysponsors')

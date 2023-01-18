@@ -22,6 +22,7 @@ export class PostService {
   }
 
   async getPostsByUser(id: string) {
+
     const posts = await this.postRepo.find({
       where: {
         user: {
