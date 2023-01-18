@@ -10,15 +10,16 @@ dotenv.config();
 import { ConfigService } from '@nestjs/config';
 import { User } from 'src/user/entities/user.entity';
 import { Post } from 'src/post/entities/post.entity';
+import { Sponsor } from 'src/sponsor/entities/sponsor.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Post]),
+    TypeOrmModule.forFeature([User, Post, Sponsor]),
     PassportModule.register({ defaultStrategy: 'jwt' }), //importer passport module
     JwtModule.register({
       //importer jwt module that provides jwt services
       secret: process.env.SECRET,
-      signOptions: { expiresIn: 3600 },
+      signOptions: { expiresIn: '10h' },
     }),
   ],
   controllers: [UserController],

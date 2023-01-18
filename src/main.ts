@@ -10,7 +10,7 @@ async function bootstrap() {
 
   app.use(morgan('dev'));
   const options = {
-    origin: 'http://[::1]:3000',
+    origin: 'http://localhost:3000',
   };
 
   app.enableCors(options);

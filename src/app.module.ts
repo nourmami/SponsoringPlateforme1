@@ -12,9 +12,13 @@ import { Post } from './post/entities/post.entity';
 import { SponsorModule } from './sponsor/sponsor.module';
 import { Sponsor } from './sponsor/entities/sponsor.entity';
 
+
+
 @Module({
   imports: [
-    MulterModule.register(),
+    MulterModule.register({
+      dest: './uploads',
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,

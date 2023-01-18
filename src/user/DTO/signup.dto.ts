@@ -6,6 +6,7 @@ import {
   Matches,
   Validate,
   IsEnum,
+  IsOptional,
 } from 'class-validator';
 import { UserRoleEnum } from 'src/enums/user-role.enum';
 import { CustomMatchPasswords } from '../../common/passwordMatch.validator';
@@ -16,7 +17,7 @@ export class signupDto {
   email: string;
 
   @IsNotEmpty({ message: 'UserName is required' })
-  @Length(3, 10, { message: 'UserName must be between 7 and 20 characters' })
+  @Length(7, 20, { message: 'UserName must be between 7 and 20 characters' })
   userName: string;
 
   @IsString()
@@ -32,7 +33,23 @@ export class signupDto {
   @Validate(CustomMatchPasswords, ['password'])
   confirmPassword: string;
 
-  
   @IsEnum(UserRoleEnum, { message: 'Invalid role' })
-  role :UserRoleEnum ;
+  role: UserRoleEnum;
+
+  @IsString()
+  fullname: string;
+}
+
+export class updateDto {
+  @IsString()
+  @IsOptional()
+  fullname: string;
+
+  @IsString()
+  @IsOptional()
+  bio: string;
+
+  @IsString()
+  @IsOptional()
+  title: string;
 }
