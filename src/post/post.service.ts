@@ -58,6 +58,23 @@ export class PostService {
     return posts;
   }
 
+  async getMyFeed(id: string) {
+    const posts = await this.postRepo.find({
+      where: {
+        user: {
+          followers: {
+            id: id,
+          },
+        },
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+    return posts;
+  }
+  //getMyFeed - get all posts from users that I follow
+
   async update(id: number, updatePostDto: UpdatePostDto): Promise<Post> {
     const newEntity = await this.postRepo.preload({ id, ...updatePostDto });
     if (!newEntity) {

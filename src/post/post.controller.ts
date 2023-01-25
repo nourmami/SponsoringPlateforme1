@@ -65,6 +65,11 @@ export class PostController {
     return this.postService.getPosts();
   }
 
+  @Get('myfeed')
+  @UseGuards(JwtAuthGuard)
+  getFeed(@AuthenticatedUser() user: User) {
+    return this.postService.getMyFeed(user.id);
+  }
   @Get('myposts')
   @UseGuards(JwtAuthGuard)
   getMe(@AuthenticatedUser() user: User) {

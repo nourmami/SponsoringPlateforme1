@@ -11,6 +11,7 @@ import { User } from './user/entities/user.entity';
 import { Post } from './post/entities/post.entity';
 import { SponsorModule } from './sponsor/sponsor.module';
 import { Sponsor } from './sponsor/entities/sponsor.entity';
+import { BrowseModule } from './browse/browse.module';
 
 
 
@@ -35,6 +36,7 @@ import { Sponsor } from './sponsor/entities/sponsor.entity';
     PostModule,
     FollowModule,
     SponsorModule,
+    BrowseModule,
   ],
 })
 export class AppModule implements NestModule {

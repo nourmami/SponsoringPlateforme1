@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Repository, IsNull } from 'typeorm';
-import { CreateSponsorDto } from './dto/create-sponsor.dto';
-import { UpdateSponsorDto } from './dto/update-sponsor.dto';
 import { Sponsor } from './entities/sponsor.entity';
 
 @Injectable()
@@ -120,23 +118,5 @@ export class SponsorService {
     return null;
   }
 
-  // create(createSponsorDto: CreateSponsorDto) {
-  //   return 'This action adds a new sponsor';
-  // }
-
-  // findAll() {
-  //   return `This action returns all sponsor`;
-  // }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} sponsor`;
-  // }
-
-  // update(id: string, updateSponsorDto: UpdateSponsorDto) {
-  //   return `This action updates a #${id} sponsor`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} sponsor`;
-  // }
+  
 }
