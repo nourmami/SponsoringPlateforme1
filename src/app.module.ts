@@ -11,9 +11,9 @@ import { User } from './user/entities/user.entity';
 import { Post } from './post/entities/post.entity';
 import { SponsorModule } from './sponsor/sponsor.module';
 import { Sponsor } from './sponsor/entities/sponsor.entity';
-import { BrowseModule } from './browse/browse.module';
-
-
+import { Conversation } from './chat/entities/conversation.entity';
+import { Message } from './chat/entities/message.entity';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -27,7 +27,7 @@ import { BrowseModule } from './browse/browse.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, Post, Sponsor],
+      entities: [User, Post, Sponsor, Conversation, Message],
       // autoLoadEntities: true,
       synchronize: true,
       ssl: process.env.DB_SSL === 'true' ? true : false,
@@ -36,7 +36,7 @@ import { BrowseModule } from './browse/browse.module';
     PostModule,
     FollowModule,
     SponsorModule,
-    BrowseModule,
+    ChatModule,
   ],
 })
 export class AppModule implements NestModule {

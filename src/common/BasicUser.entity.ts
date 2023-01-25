@@ -1,7 +1,18 @@
 import { Exclude } from 'class-transformer';
+import { Message } from 'src/chat/entities/message.entity';
 import { UserRoleEnum } from 'src/enums/user-role.enum';
 import { Post } from 'src/post/entities/post.entity';
-import {Entity,Column,PrimaryGeneratedColumn,UpdateDateColumn,DeleteDateColumn,CreateDateColumn,ManyToMany,OneToMany,JoinTable,} from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  CreateDateColumn,
+  ManyToMany,
+  OneToMany,
+  JoinTable,
+} from 'typeorm';
 
 @Entity()
 export class BasicUser {

@@ -1,8 +1,8 @@
-import { Entity,  JoinTable,  ManyToMany   } from 'typeorm';
+import { Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { BasicUser } from 'src/common/BasicUser.entity';
-import { Sponsor }  from 'src/sponsor/entities/sponsor.entity';
-
-
+import { Sponsor } from 'src/sponsor/entities/sponsor.entity';
+import { Message } from 'src/chat/entities/message.entity';
+import { Conversation } from 'src/chat/entities/conversation.entity';
 
 @Entity()
 export class User extends BasicUser {
@@ -17,4 +17,10 @@ export class User extends BasicUser {
   @ManyToMany(() => Sponsor, (sponsor) => sponsor.sponsorings)
   @JoinTable()
   sponsors: Sponsor[];
+
+  @OneToMany(() => Message, (message) => message.senderAsUser)
+  messages: Message[];
+
+  @OneToMany(() => Conversation, (conversation) => conversation.user)
+  conversations: Conversation[];
 }
