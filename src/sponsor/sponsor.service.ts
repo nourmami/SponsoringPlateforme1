@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { processTransaction } from 'src/stripe';
 import { User } from 'src/user/entities/user.entity';
-import { Repository, IsNull } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Sponsor } from './entities/sponsor.entity';
 
 @Injectable()
@@ -65,8 +66,6 @@ export class SponsorService {
   }
 
   async getSponsors(userId: string) {
-
-    
     const user = await this.userRepo.findOne({
       where: { id: userId },
       relations: ['sponsors'],
@@ -117,6 +116,4 @@ export class SponsorService {
 
     return null;
   }
-
-  
 }

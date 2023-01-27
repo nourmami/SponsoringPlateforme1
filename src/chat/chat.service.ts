@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { WebSocketServer } from '@nestjs/websockets';
 import { Sponsor } from 'src/sponsor/entities/sponsor.entity';
+import { processTransaction } from 'src/stripe';
 import { User } from 'src/user/entities/user.entity';
 import { Repository, IsNull } from 'typeorm';
 import { ChatGateway } from './chat.gateway';
@@ -71,6 +72,49 @@ export class ChatService {
     }
 
     return null;
+  }
+
+  async validateSponsorship(payload: string, amount: number) {
+    const message = await this.messageRepo.findOne({
+      where: { payload },
+    });
+
+    if (message) {
+      message.content =
+        'Sponsorship Payment of amount ' + amount.toString() + '$ Successful';
+      await this.messageRepo.save(message);
+      // this.chatGateway.server.emit('message', message);
+    }
+  }
+  async generateStripeLink(userId: string, conversationId: string) {
+    const conversation = await this.conversationRepo.findOne({
+      where: { id: conversationId },
+      relations: ['sponsor'],
+    });
+
+    const sponsor = conversation.sponsor;
+
+    const { id, url } = await processTransaction(
+      userId,
+      'Sponsorship for ' + sponsor.fullname,
+      'Sponsorship for ' + sponsor.fullname,
+    );
+
+    // create message
+    const message = this.messageRepo.create({
+      type: 'stripe',
+      content: 'Sponsorship Payment Initiated...',
+      payload: id,
+    });
+
+    message.senderAsUser = await this.userRepo.findOne({
+      where: { id: userId },
+    });
+
+    message.conversation = conversation;
+    await this.messageRepo.save(message);
+
+    return { url };
   }
 
   async getConversations(userId: string) {

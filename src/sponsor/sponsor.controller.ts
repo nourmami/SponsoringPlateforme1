@@ -12,6 +12,7 @@ import { SponsorService } from './sponsor.service';
 import { JwtAuthGuard } from './../user/guards/jwt-auth.guard';
 import { AuthenticatedUser } from 'src/common/decorators';
 import { User } from './../user/entities/user.entity';
+import { processTransaction } from 'src/stripe';
 
 @Controller('sponsor')
 export class SponsorController {
@@ -68,6 +69,4 @@ export class SponsorController {
   countSponsorings(@Param('id') id: string) {
     return this.sponsorService.countSponsorings(id);
   }
-
-
 }

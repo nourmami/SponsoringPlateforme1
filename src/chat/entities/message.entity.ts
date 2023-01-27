@@ -30,13 +30,16 @@ export class Message {
 
   @Column({
     type: 'enum',
-    enum: ['text', 'image', 'file'],
+    enum: ['text', 'image', 'file', 'stripe'],
     default: 'text',
   })
   type: string;
 
   @Column()
   content: string;
+
+  @Column({ nullable: true })
+  payload: string;
 
   @CreateDateColumn({ update: false })
   createdAt: Date;

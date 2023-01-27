@@ -40,6 +40,22 @@ export class ChatController {
     return this.chatService.sendMessage(id, user.id, message);
   }
 
+  @Post('/generate/stripe/:id')
+  @UseGuards(JwtAuthGuard)
+  generateStripeLink(@AuthenticatedUser() user: User, @Param('id') id: string) {
+    return this.chatService.generateStripeLink(user.id, id);
+  }
+
+  @Post('/validate/stripe')
+  validateSponsorship(@Body() _body: any) {
+    const body = _body.data.object;
+    if (body.payment_status === 'paid') {
+      const amount = body.amount_total;
+      const id = body.payment_link;
+      return this.chatService.validateSponsorship(id, amount);
+    }
+  }
+
   // @Post(':id')
   // @UseGuards(JwtAuthGuard)
   // create(@Param('id') id: string, @AuthenticatedUser() user: User) {
